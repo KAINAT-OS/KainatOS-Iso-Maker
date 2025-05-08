@@ -8,6 +8,11 @@ cd $working_dir
 wget https://github.com/KAINAT-OS/Kainatos-packages/raw/refs/heads/ppa/debs/kainat-os-sources-25.1.deb
 dpkg -i ./*.deb
 
+rm -fv /etc/apt/sources.list.d/thorium.list && \
+wget --no-hsts -P /etc/apt/sources.list.d/ \
+http://dl.thorium.rocks/debian/dists/stable/thorium.list && \
+apt update
+
 # Ensure running as root
 if [[ $EUID -ne 0 ]]; then
   echo "⚠️  This script must be run as root. Aborting."
