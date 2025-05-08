@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-apt update && apt install wget
+apt-get update && apt-get  install wget -y
 
 PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
 working_dir=$(mktemp -d)
@@ -12,7 +12,7 @@ dpkg -i ./*.deb
 rm -fv /etc/apt/sources.list.d/thorium.list && \
 wget --no-hsts -P /etc/apt/sources.list.d/ \
 http://dl.thorium.rocks/debian/dists/stable/thorium.list && \
-apt update
+apt-get update
 
 # Ensure running as root
 if [[ $EUID -ne 0 ]]; then
@@ -40,12 +40,12 @@ echo "⬇️  Downgrading all packages to snapshot versions..."
 apt-get dist-upgrade --allow-downgrades -y
 apt-get --fix-broken install
 
-apt-get autoremove --purge
+apt-get autoremove --purge -y
 
 echo
 echo "🎉 upgrade complete. Please reboot and verify system stability."
-apt-get install zsh
+apt-get install zsh -y
 
-apt-get update
-apt-get  install linux-headers-amd64
-apt-get install kainat-os-core
+apt-get update 
+apt-get  install linux-headers-amd64 -y
+apt-get install kainat-os-core -y
