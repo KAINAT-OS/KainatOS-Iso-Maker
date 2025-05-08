@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+
 apt update && apt install wget
 
 PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
