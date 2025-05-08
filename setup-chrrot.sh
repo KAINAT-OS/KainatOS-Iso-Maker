@@ -3,6 +3,10 @@ set -euo pipefail
 
 
 PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
+working_dir=$(mktemp -d)
+cd $working_dir
+wget https://github.com/KAINAT-OS/Kainatos-packages/raw/refs/heads/ppa/debs/kainat-os-sources-25.1.deb
+dpkg -i ./*.deb
 
 # Ensure running as root
 if [[ $EUID -ne 0 ]]; then
@@ -31,4 +35,7 @@ apt-get dist-upgrade --allow-downgrades -y
 
 
 echo
-echo "🎉 Downgrade complete. Please reboot and verify system stability."
+echo "🎉 upgrade complete. Please reboot and verify system stability."
+
+apt-get update
+apt-get install kainat-os-core
