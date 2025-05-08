@@ -37,10 +37,14 @@ apt-get update
 echo
 echo "⬇️  Downgrading all packages to snapshot versions..."
 apt-get dist-upgrade --allow-downgrades -y
+apt-get --fix-broken install
 
+apt-get autoremove --purge
 
 echo
 echo "🎉 upgrade complete. Please reboot and verify system stability."
+apt-get install zsh
 
 apt-get update
+apt-get  install linux-headers-amd64
 apt-get install kainat-os-core
