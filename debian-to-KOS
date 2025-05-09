@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
 PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
 working_dir=$(mktemp -d)
