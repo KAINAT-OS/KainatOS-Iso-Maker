@@ -5,8 +5,11 @@ if [ -e "./Debian.iso" ]; then
     echo "found it"
 else
     wget -O ./Debian.iso https://cdimage.debian.org/mirror/cdimage/archive/$deb_version-live/amd64/iso-hybrid/debian-live-$deb_version-amd64-kde.iso
-    mkdir chroot
+    if [ -d ./chroot]; then
+        mkdir chroot
+    fi
 fi
+cp ./setup-chrrot.sh ./chroot/custom-root/bin/
+chmod +x ./chroot/custom-root/bin/setup-chrrot.sh
 cubic ./chroot ./Debian.iso
-return 0
-
+exit 0
