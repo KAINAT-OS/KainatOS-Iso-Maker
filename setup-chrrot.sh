@@ -52,3 +52,7 @@ dpkg --add-architecture i386
 apt-get update 
 apt-get  install linux-headers-amd64 -y
 apt-get install kainat-os-core -y
+chsh $(which zsh)
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
