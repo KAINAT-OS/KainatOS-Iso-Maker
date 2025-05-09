@@ -46,6 +46,8 @@ echo
 echo "🎉 upgrade complete. Please reboot and verify system stability."
 apt-get install zsh -y
 
+dpkg --add-architecture i386
+
 apt-get update 
 apt-get  install linux-headers-amd64 -y
 apt-get install kainat-os-core -y
