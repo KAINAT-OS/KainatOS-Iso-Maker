@@ -9,7 +9,7 @@ else
         mkdir chroot
     fi
 fi
-cp ./setup-chrrot.sh ./chroot/custom-root/bin/
-chmod +x ./chroot/custom-root/bin/setup-chrrot.sh
+cp ./debian-to-KOS ./chroot/custom-root/bin/
+chmod +x ./chroot/custom-root/bin/debian-to-KOS
 cubic ./chroot ./Debian.iso
 exit 0
