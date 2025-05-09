@@ -46,7 +46,7 @@ apt-get autoremove --purge -y
 echo
 echo "🎉 upgrade complete. Please reboot and verify system stability."
 apt-get install zsh -y
-
+rm ${PREFS_FILE}
 dpkg --add-architecture i386
 
 apt-get update 
