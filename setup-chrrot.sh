@@ -3,6 +3,7 @@ set -euo pipefail
 
 
 apt-get update
+apt-get install wget -y
 PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
 working_dir=$(mktemp -d)
 cd $working_dir
