@@ -7,7 +7,7 @@ apt-get install wget -y
 PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
 working_dir=$(mktemp -d)
 cd $working_dir
-curl -L -O https://github.com/KAINAT-OS/Kainatos-packages/raw/refs/heads/ppa/debs/kainat-os-sources-25.1.deb
+curl -L -O https://github.com/KAINAT-OS/Kainatos-packages/raw/refs/heads/ppa/debs/kainat-os-sources-25.1.01.deb
 dpkg -i ./*.deb
 
 rm -fv /etc/apt/sources.list.d/thorium.list && \
