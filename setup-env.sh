@@ -8,7 +8,7 @@ else
     wget -O ./Debian.iso https://cdimage.debian.org/mirror/cdimage/archive/$deb_version-live/amd64/iso-hybrid/debian-live-$deb_version-amd64-kde.iso
 fi
 
-if [ -d ./chroot]; then
+if [ -d "./chroot" ]; then
     echo "exist"
 else
     mkdir chroot
