@@ -55,4 +55,4 @@ apt-get install kainat-os-core -y
 chsh $(which zsh)
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-rm /bin/setup-chrrot.sh
+rm $(which debian-to-KOS)
