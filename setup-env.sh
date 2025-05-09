@@ -9,6 +9,8 @@ else
 fi
 
 if [ -d ./chroot]; then
+    echo "exist"
+else
     mkdir chroot
 fi
 
