@@ -1,2 +1,2 @@
 #!/bin/bash
-export deb_version=6.12.0
+export deb_version=12.6.0
