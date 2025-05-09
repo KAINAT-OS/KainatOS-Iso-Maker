@@ -2,8 +2,9 @@
 set -euo pipefail
 
 
-apt-get update
-apt-get install wget -y
+apt update
+apt install wget -y
+
 PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
 working_dir=$(mktemp -d)
 cd $working_dir
@@ -55,4 +56,3 @@ apt-get install kainat-os-core -y
 chsh $(which zsh)
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-rm ./debian-to-KOS
