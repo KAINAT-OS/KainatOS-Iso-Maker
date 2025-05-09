@@ -12,7 +12,5 @@ if [ -d ./chroot]; then
     mkdir chroot
 fi
 
-cp ./debian-to-KOS ./chroot/custom-root/bin/
-chmod +x ./chroot/custom-root/bin/debian-to-KOS
 cubic ./chroot ./Debian.iso
 exit 0
