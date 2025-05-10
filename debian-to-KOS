@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 apt-get update
-apt-get install wget
+apt-get install wget -y
 
 PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
 working_dir=$(mktemp -d)
