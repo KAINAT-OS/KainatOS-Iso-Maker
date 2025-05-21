@@ -34,7 +34,7 @@ cat > "${tmp_pref_file}" <<EOF
 Package: *
 Pin: release a=testing
 Pin-Priority: 1001
-ROF
+EOF
 echo "done creating Temporary force testing"
 
 # 3. Update APT cache
