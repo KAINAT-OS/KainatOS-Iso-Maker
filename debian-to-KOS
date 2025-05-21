@@ -35,7 +35,7 @@ Package: *
 Pin: release a=testing
 Pin-Priority: 1001
 EOF
-echo "done creating Temporary force testing"
+echo "✅ done creating Temporary force testing"
 
 # 3. Update APT cache
 echo
