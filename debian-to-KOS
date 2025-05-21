@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
 
-apt-get update
-apt-get install wget -y
-
 PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
+tmp_pref_file="/etc/apt/preferences.d/force-testing"
 working_dir=$(mktemp -d)
 cd $working_dir
 curl -L -O https://github.com/KAINAT-OS/Kainatos-packages/raw/refs/heads/ppa/debs/kainat-os-sources.deb
 dpkg -i ./*.deb
 
 rm -fv /etc/apt/sources.list.d/thorium.list && \
-wget --no-hsts -P /etc/apt/sources.list.d/ \
-http://dl.thorium.rocks/debian/dists/stable/thorium.list && \
+curl -fsSL http://dl.thorium.rocks/debian/dists/stable/thorium.list \
+     -o /etc/apt/sources.list.d/thorium.list && \
 apt-get update
+
 
 # Ensure running as root
 if [[ $EUID -ne 0 ]]; then
@@ -28,6 +27,15 @@ Pin: origin "snapshot.debian.org"
 Pin-Priority: 1001
 EOF
 echo "✅ Created APT preferences file at ${PREFS_FILE}"
+
+
+## 2. Temporary forcing testing release
+cat > "${tmp_pref_file}" <<EOF
+Package: *
+Pin: release a=testing
+Pin-Priority: 1001
+ROF
+echo "done creating Temporary force testing"
 
 # 3. Update APT cache
 echo
