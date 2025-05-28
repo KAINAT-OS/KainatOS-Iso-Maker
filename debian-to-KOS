@@ -5,7 +5,7 @@ tmp_pref_file="/etc/apt/preferences.d/force-testing"
 working_dir=$(mktemp -d)
 cd $working_dir
 apt-get update
-apt-get install wget
+apt-get install wget -y
 wget https://downloads.sourceforge.net/project/kainatos/main/kainat-os-sources.deb
 dpkg -i ./*.deb
 
