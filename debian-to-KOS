@@ -1,19 +1,9 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
-tmp_pref_file="/etc/apt/preferences.d/force-testing"
-working_dir=$(mktemp -d)
-cd $working_dir
-apt-get update
-apt-get install wget -y
-wget https://downloads.sourceforge.net/project/kainatos/main/kainat-os-sources.deb
-dpkg -i ./*.deb
-
-rm -fv /etc/apt/sources.list.d/thorium.list && \
-curl -fsSL http://dl.thorium.rocks/debian/dists/stable/thorium.list \
-     -o /etc/apt/sources.list.d/thorium.list && \
-apt-get update
-
+# Force all debconf/apt to run non-interactive
+export DEBIAN_FRONTEND=noninteractive
+APT_FLAGS="-yq --allow-downgrades --allow-remove-essential --allow-change-held-packages"
 
 # Ensure running as root
 if [[ $EUID -ne 0 ]]; then
@@ -21,42 +11,56 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
+TMP_PREF_FILE="/etc/apt/preferences.d/force-testing"
+WORKDIR=$(mktemp -d)
 
-# 1. Write the APT pinning preferences
-cat > "${PREFS_FILE}" <<EOF
+cd "$WORKDIR"
+
+# 0. Initial update & prerequisites
+apt-get update $APT_FLAGS
+apt-get install wget curl dpkg -yq
+
+# 1. Download and install your .deb
+wget -q https://downloads.sourceforge.net/project/kainatos/main/kainat-os-sources.deb
+dpkg -i ./*.deb || apt-get install -f $APT_FLAGS
+
+# 2. Replace Thorium repo
+rm -f /etc/apt/sources.list.d/thorium.list
+curl -fsSL http://dl.thorium.rocks/debian/dists/stable/thorium.list \
+     -o /etc/apt/sources.list.d/thorium.list
+
+# 3. Write the snapshot pinning preferences (permanent)
+cat > "$PREFS_FILE" <<EOF
 Package: *
 Pin: origin "snapshot.debian.org"
 Pin-Priority: 1001
 EOF
-echo "✅ Created APT preferences file at ${PREFS_FILE}"
 
-
-## 2. Temporary forcing testing release
-cat > "${tmp_pref_file}" <<EOF
+# 4. Write temporary testing pin (higher priority)
+cat > "$TMP_PREF_FILE" <<EOF
 Package: *
 Pin: release a=testing
 Pin-Priority: 1001
 EOF
-echo "✅ done creating Temporary force testing"
 
-# 3. Update APT cache
-echo
+# 5. Update cache against snapshot & Thorium
 echo "🔄 Updating APT cache..."
-apt-get update
+apt-get update $APT_FLAGS
 
-# 4. Perform the dist-upgrade with downgrades
-echo
-echo "⬇️  Downgrading all packages to snapshot versions..."
-apt-get dist-upgrade --allow-downgrades -y -y
-apt-get --fix-broken install
+# 6. Downgrade/upgrade whole system to snapshot/testing
+echo "⬇️  Syncing system to snapshot/testing..."
+apt-get dist-upgrade $APT_FLAGS
+apt-get --fix-broken install $APT_FLAGS
+apt-get autoremove --purge $APT_FLAGS
 
-apt-get autoremove --purge -y
-
-echo
-echo "🎉 upgrade complete. Please reboot and verify system stability."
-rm ${PREFS_FILE}
+# 7. Cleanup snapshot pin and add i386 arch
+rm -f "$PREFS_FILE"
 dpkg --add-architecture i386
 
-apt-get update 
-apt-get  install linux-headers-amd64 -y
-apt-get install kainat-os-core -y
+# 8. Final package installs
+apt-get update $APT_FLAGS
+apt-get install linux-headers-amd64 kainat-os-core $APT_FLAGS
+
+# 9. Finish up
+echo "🎉 Installation and upgrade complete. Please reboot and verify system stability."
