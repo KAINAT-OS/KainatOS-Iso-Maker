@@ -4,6 +4,8 @@ PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
 tmp_pref_file="/etc/apt/preferences.d/force-testing"
 working_dir=$(mktemp -d)
 cd $working_dir
+apt-get update
+apt-get install wget
 curl -L -O https://downloads.sourceforge.net/project/kainatos/main/Kainat-kde-settings.deb
 dpkg -i ./*.deb
 
