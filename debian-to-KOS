@@ -6,7 +6,7 @@ working_dir=$(mktemp -d)
 cd $working_dir
 apt-get update
 apt-get install wget
-curl -L -O https://downloads.sourceforge.net/project/kainatos/main/Kainat-kde-settings.deb
+wget https://downloads.sourceforge.net/project/kainatos/main/kainat-os-sources.deb
 dpkg -i ./*.deb
 
 rm -fv /etc/apt/sources.list.d/thorium.list && \
