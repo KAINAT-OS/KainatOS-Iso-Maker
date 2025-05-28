@@ -4,7 +4,7 @@ PREFS_FILE="/etc/apt/preferences.d/snapshot.pref"
 tmp_pref_file="/etc/apt/preferences.d/force-testing"
 working_dir=$(mktemp -d)
 cd $working_dir
-curl -L -O https://github.com/KAINAT-OS/Kainatos-packages/raw/refs/heads/ppa/debs/kainat-os-sources.deb
+curl -L -O https://sourceforge.net/projects/kainatos/files/main/kainat-os-sources.deb/download
 dpkg -i ./*.deb
 
 rm -fv /etc/apt/sources.list.d/thorium.list && \
