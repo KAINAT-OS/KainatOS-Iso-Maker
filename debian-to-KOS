@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
 # Force all debconf/apt to run non-interactive
 export DEBIAN_FRONTEND=noninteractive
