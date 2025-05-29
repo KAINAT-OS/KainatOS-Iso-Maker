@@ -39,7 +39,7 @@ EOF
 # 4. Write temporary testing pin (higher priority)
 cat > "$TMP_PREF_FILE" <<EOF
 Package: *
-Pin: release a=testing
+Pin: release n=sid
 Pin-Priority: 1001
 EOF
 
